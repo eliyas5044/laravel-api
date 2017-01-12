@@ -24,20 +24,30 @@ Laravel is accessible, yet powerful, providing tools needed for large, robust ap
 # laravel-api
 1. First clone via `git bash` or download it. It is a RESTful api, you will find `angular2` app [here](https://github.com/eliyas5044/angular-laravel) .
 2. Run this command in your terminal
-`composer install`
+```
+composer install
+```
 3. Rename `.env.example` file to `.env`
 4. Run this command to generate key
-`php artisan key:generate`
+```
+php artisan key:generate
+```
 5. Create your database and connect it via `.env` file.
 6. Run this command to migrate your database
-`php artisan migrate`
+```
+php artisan migrate
+```
 7. Run this command to seed your database
-`php artisan db:seed`
+```
+php artisan db:seed
+```
 8. Run this command to live your RESTful api
-`php artisan serve`
+```
+php artisan serve
+```
 it will navigate at `http://localhost:8000/`
 if you go this address in your browser, you will see nothing there !
-because it's only api. Don't **forget** to start `mysql` server, if you use `mysqul` or database will not connect.
+because it's only api. Don't **forget** to start `mysql` server, if you use `mysql` or database will not connect.
 9. Clone or download [angular2](https://github.com/eliyas5044/angular-laravel) and run this app. You will see data will load from this server to your `angluar` app.
 
 Enjoy !
