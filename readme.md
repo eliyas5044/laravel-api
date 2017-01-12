@@ -37,7 +37,7 @@ Laravel is accessible, yet powerful, providing tools needed for large, robust ap
 `php artisan serve`
 it will navigate at `http://localhost:8000/`
 if you go this address in your browser, you will see nothing there !
-because it's only api.
+because it's only api. Don't **forget** to start `mysql` server, if you use `mysqul` or database will not connect.
 9. Clone or download [angular2](https://github.com/eliyas5044/angular-laravel) and run this app. You will see data will load from this server to your `angluar` app.
 
 Enjoy !
