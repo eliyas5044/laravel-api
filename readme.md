@@ -50,6 +50,12 @@ it will navigate at `http://localhost:8000/`
 if you go this address in your browser, you will see nothing there !
 because it's only api. Don't **forget** to start `mysql` server, if you use `mysql` or database will not connect.
 
+## All end points
+1. Method `GET`, `URI` - `http://localhost:8000/api/book`
+2. Method `POST`, `URI` - `http://localhost:8000/api/book`
+3. Method `PUT`, `URI` - `http://localhost:8000/api/book/{id}`
+4. Method `DELETE`, `URI` - `http://localhost:8000/api/book/{id}`
+
 - Clone or download [angular2](https://github.com/eliyas5044/angular-laravel) and run this app. You will see data will load from this server to your `angluar` app.
 
 Enjoy !
