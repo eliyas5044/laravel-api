@@ -50,6 +50,8 @@ it will navigate at `http://localhost:8000/`
 if you go this address in your browser, you will see nothing there !
 because it's only api. Don't **forget** to start `mysql` server, if you use `mysql` or database will not connect.
 
+You can check via [postman](https://www.getpostman.com/apps). Navigate all URI and you can see all works well.
+
 ## All end points
 1. Method `GET`, `URI` - `http://localhost:8000/api/book`
 2. Method `POST`, `URI` - `http://localhost:8000/api/book`
