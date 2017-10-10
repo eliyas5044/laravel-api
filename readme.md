@@ -7,22 +7,8 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
 </p>
 
-## About Laravel
-
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as:
-
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
-
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications. A superb combination of simplicity, elegance, and innovation give you tools you need to build any application with which you are tasked.
-
 # laravel-api
-- First clone via `git bash` or download it. It is a RESTful api, you will find `angular2` app [here](https://github.com/eliyas5044/angular-laravel) .
+- First clone via `git bash` or download it. It is a RESTful api, you will find `angular` app [angular-laravel](https://github.com/eliyas5044/angular-laravel) .
 - Run this command in your terminal
 ```
 composer install
@@ -37,20 +23,25 @@ php artisan key:generate
 ```
 php artisan migrate
 ```
-- Run this command to seed your database
+- Run this command to create fake data
 ```
-php artisan db:seed
+php artisan tinker
 ```
+- Then this command
+```
+factory(App\Book::class, 20)->create();
+```
+- I used [barryvdh/laravel-cors](https://github.com/barryvdh/laravel-cors) to enable `cors`. please go to this link and follow documentation to enable `cors`.
+- I used [laravel/passport](https://github.com/laravel/passport) to generate valid `token`.
 - Run this command to live your RESTful api
 ```
 php artisan serve
 ```
 
-it will navigate at `http://localhost:8000/`
-if you go this address in your browser, you will see nothing there !
-because it's only api. Don't **forget** to start `mysql` server, if you use `mysql` or database will not connect.
+- Plesae navigate at `http://localhost:8000`
+- Don't **forget** to start `mysql` server, if you use `mysql` or database will not connect.
 
-You can check via [postman](https://www.getpostman.com/apps). Navigate all URI and you can see all works well.
+- You can check via [postman](https://www.getpostman.com/apps). Navigate all URI and you can see all works well, false, it will not work as all routes are protected via `auth:api` middleware.
 
 ## All end points
 1. Method `GET`, `URI` - `http://localhost:8000/api/book`
@@ -58,6 +49,6 @@ You can check via [postman](https://www.getpostman.com/apps). Navigate all URI a
 3. Method `PUT`, `URI` - `http://localhost:8000/api/book/{id}`
 4. Method `DELETE`, `URI` - `http://localhost:8000/api/book/{id}`
 
-- Clone or download [angular2](https://github.com/eliyas5044/angular-laravel) and run this app. You will see data will load from this server to your `angluar` app.
+- Clone or download [angular](https://github.com/eliyas5044/angular-laravel) and run this app. You will see data will load from this server to your `angluar` app.
 
-Enjoy !
+## Enjoy !

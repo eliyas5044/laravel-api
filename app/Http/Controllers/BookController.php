@@ -14,9 +14,9 @@ class BookController extends Controller
      */
     public function index()
     {
-        $book = Book::all();
+        $books = Book::all();
 
-        return response()->json($book);
+        return response()->json($books);
     }
 
     /**
@@ -32,30 +32,30 @@ class BookController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'author'=>'required',
-            'description'=>'required'
+        $book = $request->validate([
+            'author' => 'required',
+            'description' => 'required'
         ]);
 
-        $book = Book::create($request->all());
+        $books = Book::create($book);
 
-        return response()->json($book);
+        return response()->json($books);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        $book = Book::find($id);
+        $book = Book::findOrFail($id);
 
         return response()->json($book);
     }
@@ -63,7 +63,7 @@ class BookController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -74,28 +74,32 @@ class BookController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        $book = new Book;
-        $book->author = $request->input('author');
-        $book->description = $request->input('description');
-        $book->save();
+        $data = $request->validate([
+            'author' => 'required',
+            'description' => 'required'
+        ]);
+
+        $book = Book::findOrFail($id);
+        $book->update($data);
+
         return response()->json($book);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $book = Book::find($id);
+        $book = Book::findOrFail($id);
         $book->delete();
 
         return response()->json($book);

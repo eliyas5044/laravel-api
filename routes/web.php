@@ -15,7 +15,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-//Route::group(['middleware'=>'cors','prefix'=>'api'], function (){
-//    Route::get('book', 'BookController@index');
-//    Route::post('book', 'BookController@createBook');
-//});
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
