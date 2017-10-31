@@ -14,6 +14,9 @@
 composer install
 ```
 - Rename `.env.example` file to `.env`
+```
+cp .env.example .env
+```
 - Run this command to generate key
 ```
 php artisan key:generate
@@ -31,8 +34,14 @@ php artisan tinker
 ```
 factory(App\Book::class, 20)->create();
 ```
-- I used [barryvdh/laravel-cors](https://github.com/barryvdh/laravel-cors) to enable `cors`. please go to this link and follow documentation to enable `cors`.
-- I used [laravel/passport](https://github.com/laravel/passport) to generate valid `token`.
+- I used [laravel/passport](https://github.com/laravel/passport) to generate valid `token`. Please run these command to configure passport.
+```
+php artisan passport:install
+```
+```
+php artisan passport:keys
+```
+
 - Run this command to live your RESTful api
 ```
 php artisan serve
