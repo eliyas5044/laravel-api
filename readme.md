@@ -9,37 +9,12 @@
 
 # laravel-api
 - First clone via `git bash` or download it. It is a RESTful api, you will find `angular` app [angular-laravel](https://github.com/eliyas5044/angular-laravel) .
-- Run this command in your terminal
+
+- Create your database with name `laravel_api`, you may change later.
+
+- After creating database, run this command in your terminal
 ```
-composer install
-```
-- Rename `.env.example` file to `.env`
-```
-cp .env.example .env
-```
-- Run this command to generate key
-```
-php artisan key:generate
-```
-- Create your database and connect it via `.env` file.
-- Run this command to migrate your database
-```
-php artisan migrate
-```
-- Run this command to create fake data
-```
-php artisan tinker
-```
-- Then this command
-```
-factory(App\Book::class, 20)->create();
-```
-- I used [laravel/passport](https://github.com/laravel/passport) to generate valid `token`. Please run these command to configure passport.
-```
-php artisan passport:install
-```
-```
-php artisan passport:keys
+make init
 ```
 
 - Run this command to live your RESTful api
@@ -47,12 +22,17 @@ php artisan passport:keys
 php artisan serve
 ```
 
-- Plesae navigate at `http://localhost:8000`
-- Don't **forget** to start `mysql` server, if you use `mysql` or database will not connect.
-
-- You can check via [postman](https://www.getpostman.com/apps). Navigate all URI and you can see all works well, false, it will not work as all routes are protected via `auth:api` middleware.
+- You can check via [postman](https://www.getpostman.com/apps). All books routes are protected by `auth:api` middleware, so you have to register or login to navigate those uri's.
 
 ## All end points
+### user routes
+1. `http://localhost:8000/api/register`
+2. `http://localhost:8000/api/login`
+3. `http://localhost:8000/api/logout`
+4. `http://localhost:8000/api/me`
+5. `http://localhost:8000/api/refresh`
+
+### book routes
 1. Method `GET`, `URI` - `http://localhost:8000/api/book`
 2. Method `POST`, `URI` - `http://localhost:8000/api/book`
 3. Method `PUT`, `URI` - `http://localhost:8000/api/book/{id}`
