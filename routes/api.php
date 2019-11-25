@@ -11,8 +11,10 @@
 |
 */
 
-// Book resource routes
-Route::resource('book', 'BookController')->middleware('auth:api');
+Route::middleware('auth:api')->group(function () {
+    // Book resource routes
+    Route::resource('book', 'BookController');
+});
 
 // User routes
 // login route

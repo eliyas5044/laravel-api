@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Http\Resources\AuthUserResource;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 
@@ -46,21 +47,37 @@ class AuthController extends Controller
      * Register a new user
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
     public function register(Request $request)
     {
         $data = $this->validate($request, [
             'name' => 'required',
             'email' => 'required|email',
-            'password' => 'required|min:6',
+            'password' => 'required|min:8',
         ]);
-        $user = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
-        $token = auth()->login($user);
-        return $this->respondAfterRegister($token);
+        DB::beginTransaction();
+        try {
+            $user = User::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => Hash::make($data['password']),
+            ]);
+
+            DB::commit();
+
+            $token = auth()->login($user);
+            return $this->respondAfterRegister($token);
+        } catch (\Exception $exception) {
+            report($exception);
+            DB::rollBack();
+
+            return response()->json([
+                'error' => true,
+                'success' => false,
+                'message' => $exception->getMessage()
+            ], 400);
+        }
     }
 
     /**

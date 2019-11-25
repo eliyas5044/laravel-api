@@ -5,13 +5,16 @@ namespace App\Http\Controllers;
 use App\Book;
 use App\Http\Resources\BookResource;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 
 class BookController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     * @return AnonymousResourceCollection
      */
     public function index()
     {
@@ -23,29 +26,46 @@ class BookController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
+     * @throws \Exception
      */
     public function store(Request $request)
     {
-        $book = $request->validate([
+        $this->validate($request, [
             'author' => 'required',
             'description' => 'required'
         ]);
+        $request->merge(['user_id', auth()->id()]);
 
-        Book::create($book);
+        DB::beginTransaction();
 
-        return response()->json([
-            'error' => false,
-            'success' => true,
-            'message' => 'Created Successfully'
-        ], 201);
+        try {
+            Book::create($request->all());
+
+            DB::commit();
+
+            return response()->json([
+                'error' => false,
+                'success' => true,
+                'message' => 'Created Successfully'
+            ], 201);
+        } catch (\Exception $exception) {
+            report($exception);
+            DB::rollBack();
+
+            return response()->json([
+                'error' => true,
+                'success' => false,
+                'message' => $exception->getMessage()
+            ], 400);
+        }
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Book $book
+     * @param Book $book
      * @return BookResource
      */
     public function show(Book $book)
@@ -56,41 +76,66 @@ class BookController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \App\Book $book
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Book $book
+     * @return Response
+     * @throws \Exception
      */
     public function update(Request $request, Book $book)
     {
-        $data = $request->validate([
+        $this->validate($request, [
             'author' => 'required',
             'description' => 'required'
         ]);
 
-        $book->update($data);
+        DB::beginTransaction();
 
-        return response()->json([
-            'error' => false,
-            'success' => true,
-            'message' => 'Updated Successfully'
-        ], 200);
+        try {
+            $book->update($request->all());
+
+            DB::commit();
+
+            return response()->json([
+                'error' => false,
+                'success' => true,
+                'message' => 'Updated Successfully'
+            ], 200);
+        } catch (\Exception $exception) {
+            report($exception);
+            DB::rollBack();
+
+            return response()->json([
+                'error' => true,
+                'success' => false,
+                'message' => $exception->getMessage()
+            ], 400);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Book $book
-     * @return \Illuminate\Http\Response
+     * @param Book $book
+     * @return Response
      * @throws \Exception
      */
     public function destroy(Book $book)
     {
-        $book->delete();
+        try {
+            $book->delete();
 
-        return response()->json([
-            'error' => false,
-            'success' => true,
-            'message' => 'Deleted Successfully'
-        ], 200);
+            return response()->json([
+                'error' => false,
+                'success' => true,
+                'message' => 'Deleted Successfully'
+            ], 200);
+        } catch (\Exception $exception) {
+            report($exception);
+            return response()->json([
+                'error' => true,
+                'success' => false,
+                'message' => $exception->getMessage()
+            ], 400);
+        }
     }
 }
